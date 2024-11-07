@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.neighbors import BallTree
-from scipy.spatial.qhull import QhullError
+from scipy.spatial import QhullError
 from infomap import Infomap
 from scipy.spatial import ConvexHull
 from tqdm import tqdm
@@ -212,7 +212,8 @@ def label_network(
 
     # Cast the partition as a vector of labels like `[0, 1, 0, 3, 0, 0, 2, ...]`
     return np.array(
-        [partition[n] if n in partition else -1 for n in range(len(node_idx_neighbors))]
+        [partition[n] if n in partition else -
+            1 for n in range(len(node_idx_neighbors))]
     )
 
 
@@ -241,9 +242,9 @@ def max_pdist(points):
     vec_idx = 0
     for idx in range(0, c - 1):
         ref = points[idx]
-        temp = _l2(points[idx + 1 : c, :], ref)
+        temp = _l2(points[idx + 1: c, :], ref)
         # to be taken care of
-        result[vec_idx : vec_idx + temp.shape[0]] = temp
+        result[vec_idx: vec_idx + temp.shape[0]] = temp
         vec_idx += temp.shape[0]
     return max(result)
 
